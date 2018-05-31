@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class FireBall extends GameObject {
+    
+    //make a new class for enemy fireballs, can extend FireBall
 
     private boolean enemy;
     private double xSpeed;
@@ -25,6 +27,10 @@ public class FireBall extends GameObject {
     public Image getFireBallImage() {
         return icon.getImage();
     }
+    
+    public void setImage() {
+        icon = new ImageIcon("");
+    }
 
     public Rectangle2D getRectangle() {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
@@ -42,19 +48,13 @@ public class FireBall extends GameObject {
         g2d.drawImage(getFireBallImage(), getXPos(), getYPos(), null);
     }
 
-    public void update(ControlPanel panel, GameObject object, ArrayList<GameObject> objects) {
+    public void update(ControlPanel panel , ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         //the enemy fireball has x component, player doesn't
         if (enemy) {
             x += xSpeed;
             y += ySpeed;
         } else {
             y -= ySpeed;
-        }
-        
-        for (GameObject check : objects) {
-            if (checkCollision(check) && !(check instanceof FireBall)) {
-                System.out.println("yes");
-            }
-        }
+        }        
     }
 }

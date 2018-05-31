@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class Player extends GameObject {
@@ -15,6 +16,9 @@ public class Player extends GameObject {
     private double ySpeed;
     private int level;
     private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/orange dragon_16.png");
+    private int numKilled = 0;
+    private int killCap = 8;
+    private boolean waveKilled = true;
 
     public Player(int x, int y, double xSpeed, double ySpeed) {
         super(x, y);
@@ -26,6 +30,14 @@ public class Player extends GameObject {
 
     public void paint(Graphics2D g2d) {
         g2d.drawImage(getPlayerImage(), getXPos(), getYPos(), null);
+    }
+
+    public void setImage() {
+
+    }
+
+    public ImageIcon getPlayerIcon() {
+        return icon;
     }
 
     public Image getPlayerImage() {
@@ -52,8 +64,49 @@ public class Player extends GameObject {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
+    public void setWaveKilled() {
+        waveKilled = true;
+    }
+
+    public boolean getWaveKilled() {
+        return waveKilled;
+    }
+
+    public void incNumKilled() {
+        numKilled++;
+    }
+
+    //create a bunch of enemy objects depending on the number?
+    //method is called in the player class?
+    public void spawn(ArrayList<GameObject> objects, ControlPanel panel) {
+        Random rand = new Random();
+        int xPos;
+        int yPos = 0;
+        int value = 0;
+        int type = 0;
+        if (level == 1) {
+            type = rand.nextInt(2) + 1;
+            xPos = type == 1 ? 0 : panel.getWidth();
+
+            for (int i = 0; i < killCap; i++) {
+                //movement is randomized from a number 1-3 (inclusive)
+                if (type == 1) {
+                    value = rand.nextInt(3) + 1;
+                    xPos -= 200;
+                    yPos -= 200;
+                    objects.add(new EnemyLvl1(xPos, yPos, value));
+                } else if (type == 2) {
+                    value = rand.nextInt(3) + 4;
+                    xPos += 200;
+                    yPos -= 200;
+                    objects.add(new EnemyLvl1(xPos, yPos, value));
+                }
+            }
+        }
+    }
+
     //
-    public void update(ControlPanel panel, GameObject object, ArrayList<GameObject> objects) {
+    public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         x += xSpeed;
         y += ySpeed;
         //values of x and y are based on the image size ~(100 x 75), panel size 800 x 700, so values subtracted
@@ -64,6 +117,31 @@ public class Player extends GameObject {
         //case if player impacts the bottom or top wall  
         if (y <= 0 || y >= panel.getHeight() - 60) {
             y = y <= 0 ? 0 : panel.getHeight() - 60;
+        }
+
+        //if the entire wave is killed reset, and set boolean to true, then somehow implement in control panel
+        //move below to the player class
+        System.out.println(numKilled);
+        if (numKilled >= killCap) {
+            setWaveKilled();
+            numKilled = 0;
+        }
+
+        //spawns new wave if the wave is killed
+        if (waveKilled) {
+            spawn(objects, panel);
+            waveKilled = false;
+        }
+
+        //checks if player collides with fireball or enemy object and decrements life
+        //later make it flash so the player knows they lost a life
+        //later add in another if statement checking for instanceof PowerUp collision
+        for (GameObject object : objects) {
+            if (checkCollision(object) && (object instanceof Enemy || object instanceof FireBall)) {
+                numLives--;
+                //this ^ causes numLives to decrement with every pixel collision, need way of decrementing only with the first collision?
+                //System.out.println(numLives);
+            }
         }
     }
 }

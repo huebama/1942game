@@ -34,6 +34,8 @@ public abstract class GameObject {
         return getRectangle().intersects(object.getRectangle().getBounds());
     }
 
+    public abstract void setImage();
+
     public abstract Rectangle2D getRectangle();
 
     public abstract void setXSpeed(double xSpeed);
@@ -42,5 +44,5 @@ public abstract class GameObject {
 
     public abstract void paint(Graphics2D g2d);
 
-    public abstract void update(ControlPanel panel, GameObject object, ArrayList<GameObject> objects);
+    public abstract void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player);
 }

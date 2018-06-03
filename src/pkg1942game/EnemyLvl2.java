@@ -7,30 +7,39 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 //increase enemy health (allow collisions twice, have variable and increment it)
-
 public class EnemyLvl2 extends Enemy {
 
     private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/red dragon_01.png");
-    private ImageIcon iconBack = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/red dragon_11.png");
-    private boolean forward = true;
+    private ImageIcon iconHor = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/red dragon_04.png");
     private int num = 1;
-    private boolean hit = false;
-    private int score = 0;
     private boolean change = false;
+    private int movement;
+    private int orgX;
+    private int lives = 3;
 
-    public EnemyLvl2(int x, int y) {
+    public EnemyLvl2(int x, int y, int movement) {
         super(x, y, 3, 3);
+        this.movement = movement;
+        orgX = x;
+    }
+    
+    public int getLives() {
+        return lives;
+    }
+    
+    public void setLives() {
+        lives--;
     }
 
     public Image getEnemyImage() {
-        return forward ? icon.getImage() : iconBack.getImage();
+        return movement < 3 ? icon.getImage() : iconHor.getImage();
     }
 
     public void setImage() {
-        if (forward) {
+        if (movement < 3) {
             icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
         } else {
-            iconBack = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
+            iconHor = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
         }
     }
 
@@ -43,48 +52,38 @@ public class EnemyLvl2 extends Enemy {
     }
 
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
-        y += getYSpeed();
-        
-        //zigzagging movement {
-        if (x >= panel.getWidth() / 8) {
-            change = true;
-        } else if (x == 0) {
-            change = false;
-        }
-        
-        if (change) {
-            x -= getXSpeed();
-        } else {
-            x += getXSpeed();
-        }
-        //}                
-        
-        if (y > panel.getHeight()) {
-            y = -50;
-        }
-        
-        //left or right wall impact
-        if (x < 0 || x > panel.getWidth() - icon.getIconWidth()) {
-            setXSpeed(-getXSpeed());
+        switch (movement) {
+            case 1:
+                y += getYSpeed();
+                break;
+            case 2:
+                //zigzagging movement 
+                y += getYSpeed();
+                if ((x - orgX) >= panel.getWidth() / 8) {
+                    change = true;
+                } else if (x == orgX) {
+                    change = false;
+                }
+
+                if (change) {
+                    x -= getXSpeed();
+                } else {
+                    x += getXSpeed();
+                }
+                break;
+            case 3:
+                x -= getXSpeed();
+                break;
         }
 
-        //checks if fireball hits enemy or player object 
-        //need to add these objects to the delete array list
-        for (GameObject check : objects) {
-            if (checkCollision(check) && check instanceof FireBall) {
-                this.setXSpeed(0);
-                this.setYSpeed(0);
-                check.setImage();
-                check.setXSpeed(0);
-                check.setYSpeed(0);
-                this.setImage();
-                hit = true;
-                score.setScore(200);
-            }
+        if (y > panel.getHeight()) {
+            y = -100;
         }
-        if (hit) {
-            num = num < 10 ? num + 1 : 100;
-            this.setImage();
+
+        if (x < 0 - icon.getIconWidth() && movement == 3) {
+            x = panel.getWidth() + 100;
         }
+
+        checkHit(objects, delete, score, this, player);
     }
 }

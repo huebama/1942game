@@ -16,6 +16,8 @@ public abstract class Enemy extends GameObject {
 
     protected double xSpeed;
     protected double ySpeed;
+    private boolean hit = false;
+    private int num = 0;
 
     public Enemy(int x, int y, double xSpeed, double ySpeed) {
         super(x, y);
@@ -39,7 +41,42 @@ public abstract class Enemy extends GameObject {
         this.ySpeed = ySpeed;
     }
     
+    //checks to see if fireball hits enemy
+    public void checkHit(ArrayList<GameObject> objects, ArrayList<GameObject> delete, Score score, Enemy enemy, Player player) {
+                //checks if fireball hits enemy or player object 
+        //need to add these objects to the delete array list
+        for (GameObject check : objects) {
+            if (checkCollision(check) && (check instanceof FireBall || check instanceof Bomb)) {
+                check.setImage();
+                check.setXSpeed(0);
+                check.setYSpeed(0);
+                delete.add(check);
+                //bomb deals 2 damage
+                if (check instanceof Bomb) {
+                    enemy.setLives();
+                }
+                enemy.setLives();
+                score.setScore(100);
+            }
+        }
+
+        hit = enemy.getLives() <= 0 ? true : false;
+
+        if (hit) {
+            enemy.setImage();
+            num = num < 10 ? num + 1 : 100;
+            if (num == 100) {
+                player.incNumKilled();
+                delete.add(this);
+            }
+        }
+    }
+    
     public abstract void setImage();
+    
+    public abstract int getLives();
+    
+    public abstract void setLives();
     
     public abstract Image getEnemyImage();
     

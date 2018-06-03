@@ -9,12 +9,12 @@ import javax.swing.ImageIcon;
 public class Bomb extends GameObject {
 
     private double ySpeed;
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_14.png");
+    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_23.png");
 
     public Bomb(int x, int y, double ySpeed) {
         super(x, y);
         this.ySpeed = ySpeed;
-    }
+    }    
 
     public Image getBombImage() {
         return icon.getImage();

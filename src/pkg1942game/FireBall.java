@@ -7,27 +7,26 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class FireBall extends GameObject {
-    
-    //make a new class for enemy fireballs, can extend FireBall
 
-    private boolean enemy;
     private double xSpeed;
     private double ySpeed;
     private int powerLevel;
-    private ImageIcon icon = new ImageIcon(enemy ? "/Users/stephaniegu/Desktop/Sprites/fireball_56.png" : "/Users/stephaniegu/Desktop/Sprites/player fire_14.png");
+    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_14.png");
+    private boolean enemy;
 
-    public FireBall(int x, int y, double xSpeed, double ySpeed, boolean enemy, int powerLevel) {
+    public FireBall(int x, int y, double xSpeed, double ySpeed, int powerLevel, boolean enemy) {
         super(x, y);
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
-        this.enemy = enemy;
+        //later implement this variable so that a fireball is more powerful?? idk or we can get rid of this
         this.powerLevel = powerLevel;
+        this.enemy = enemy;
     }
 
     public Image getFireBallImage() {
         return icon.getImage();
     }
-    
+
     public void setImage() {
         icon = new ImageIcon("");
     }
@@ -48,13 +47,8 @@ public class FireBall extends GameObject {
         g2d.drawImage(getFireBallImage(), getXPos(), getYPos(), null);
     }
 
-    public void update(ControlPanel panel , ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
-        //the enemy fireball has x component, player doesn't
-        if (enemy) {
-            x += xSpeed;
-            y += ySpeed;
-        } else {
-            y -= ySpeed;
-        }        
+    //add varying movement for if boolean enemy = true
+    public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
+        y -= ySpeed;
     }
 }

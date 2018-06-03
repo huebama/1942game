@@ -12,18 +12,24 @@ public class EnemyLvl1 extends Enemy {
     private ImageIcon iconBack = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/black dragon_12.png");
     private boolean forward = true;
     private int num = 1;
-    private boolean hit = false;
-    private int score = 0;
     private int movement;
     private int orgX;
     private int orgY;
+    private int lives = 1;
 
-    //ADD PARAMETER INT MOVEMENT once the spawn method in Enemy is made
     public EnemyLvl1(int x, int y, int movement) {
         super(x, y, 5, 5);
         this.movement = movement;
         orgX = x;
         orgY = y;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives() {
+        lives--;
     }
 
     public Image getEnemyImage() {
@@ -59,8 +65,8 @@ public class EnemyLvl1 extends Enemy {
                 y += ySpeed - 1;
                 break;
             case 3:
-                x += xSpeed - 1;
-                y += ySpeed;
+                x += xSpeed;
+                y += ySpeed - 2;
                 break;
             case 4:
                 x -= xSpeed;
@@ -78,37 +84,17 @@ public class EnemyLvl1 extends Enemy {
         //can reduce this
         if (movement <= 3) {
             if (x > panel.getWidth() || y > panel.getHeight()) {
+                //change these to the same values, time difference already set, maybe start them all at -200, -200?
                 x = orgX;
                 y = orgY;
             }
         } else {
-            if (x < 0 - icon.getIconWidth()|| y > panel.getHeight()) {
+            if (x < 0 - icon.getIconWidth() || y > panel.getHeight()) {
                 x = orgX;
                 y = orgY;
             }
         }
 
-        //HAVE TO CHANGE POSITION OF THIS CODE BELOW (different enemy objects, so would have to repeat code for every enemy if placed here)
-        //checks if fireball hits enemy or player object 
-        for (GameObject check : objects) {
-            if (checkCollision(check) && (check instanceof FireBall || check instanceof Bomb)) {
-                this.setXSpeed(0);
-                this.setYSpeed(0);
-                check.setImage();
-                check.setXSpeed(0);
-                check.setYSpeed(0);
-                this.setImage();
-                hit = true;
-                score.setScore(100);
-            }
-        }
-        if (hit) {
-            num = num < 10 ? num + 1 : 100;
-            if (num == 100) {
-                player.incNumKilled();
-                delete.add(this);
-            }
-            this.setImage();
-        }
+        checkHit(objects, delete, score, this, player);
     }
 }

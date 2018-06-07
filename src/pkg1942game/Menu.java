@@ -1,24 +1,44 @@
 package pkg1942game;
 
+import java.awt.BasicStroke;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import javax.swing.ImageIcon;
 
-public class Menu {
+public class Menu {        
 
-   //fix this so the height and width values aren't hardcoded (the first 2 parameters)
-    private Rectangle play = new Rectangle(300, 300, 200, 50);
-    private Rectangle quit = new Rectangle(300, 410, 200, 50);
-    private Rectangle rules = new Rectangle(300, 520, 200, 50);
+    private ImageIcon icon = new ImageIcon("Kingdom/sora.png");
+    private ImageIcon icon2 = new ImageIcon("Kingdom/kh.png");
+    private ImageIcon bg = new ImageIcon("Kingdom/white.jpg");
+    private Font font;
 
-    public void paint(Graphics2D g2d) {
-        //maybe make a title on a different app and save as an image and g2d.drawImage(...)??        
+    public void paint(Graphics2D g2d, ControlPanel panel) {
+        //maybe make a title on a different app and save as an image and g2d.drawImage(...)?? 
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("Kingdom/Vecna Bold.otf"))).deriveFont(Font.PLAIN, 30);
+            g2d.setFont(font);
+        } catch (FontFormatException e) {
+        } catch (IOException e) {
+        }
         
-        g2d.drawString("PLAY", 400, 325);
+        g2d.drawImage(bg.getImage(), 0, 0, null);
 
-        g2d.draw(play);
-        g2d.draw(quit);
-        g2d.draw(rules);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawLine(25, 450, 800, 450);
+        g2d.drawLine(25, 525, 800, 525);
+        g2d.drawLine(25, 600, 800, 600);
+
+        g2d.drawImage(icon.getImage(), 300, 50, null);
+        g2d.drawImage(icon2.getImage(), 5, -20, null);
+        g2d.drawString("F L I G H T", 360, 230);
+
+        g2d.drawString("P L A Y", 25, 435);
+        g2d.drawString("Q U I T", 25, 510);
+        g2d.drawString("H E L P", 25, 585);
     }
-    
-    
+
 }

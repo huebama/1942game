@@ -8,15 +8,16 @@ import javax.swing.ImageIcon;
 
 public class EnemyLvl3 extends Enemy {
 
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/brown dragon_01.png");
+    private ImageIcon icon = new ImageIcon("Kingdom/big_13.png");    
     private int num = 1;
     private boolean change = false;
     private int movement;
     private int orgX;
-    private int lives = 3;
+    private int lives = 5;
+    private long lastShot = 0;
 
     public EnemyLvl3(int x, int y, int movement) {
-        super(x, y, 3, 3);
+        super(x, y, 2, 2);
         this.movement = movement;
         orgX = x;
     }
@@ -34,7 +35,7 @@ public class EnemyLvl3 extends Enemy {
     }
 
     public void setImage() {
-        icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
+        icon = new ImageIcon("Kingdom/player fire_0" + num + ".png");
     }
 
     public Rectangle2D getRectangle() {
@@ -43,6 +44,14 @@ public class EnemyLvl3 extends Enemy {
 
     public void paint(Graphics2D g2d) {
         g2d.drawImage(getEnemyImage(), getXPos(), getYPos(), null);
+    }
+    
+    public void shoot(ArrayList<GameObject> objects, Long now) {
+        if (now - lastShot >= 3000) {
+            objects.add(new EnemyFireBall(x + icon.getIconWidth() / 2, y + icon.getIconHeight() / 2, 0, 6));
+	    Sound.ENEMY_SHOOT.playSoundEffect();
+            lastShot = now;
+        }
     }
 
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
@@ -62,7 +71,9 @@ public class EnemyLvl3 extends Enemy {
         
         if (y > panel.getHeight() + icon.getIconHeight()) {
             y = -100;
-        }
+        }               
+        
+        shoot(objects, System.currentTimeMillis());
         checkHit(objects, delete, score, this, player);
     }
 }

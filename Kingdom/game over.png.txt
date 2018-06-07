@@ -1,0 +1,1 @@
+game over_01.png.png 60 0, game over_02.png.png 229 153.

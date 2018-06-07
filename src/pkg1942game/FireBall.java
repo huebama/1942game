@@ -11,16 +11,12 @@ public class FireBall extends GameObject {
     private double xSpeed;
     private double ySpeed;
     private int powerLevel;
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_14.png");
-    private boolean enemy;
+    private ImageIcon icon = new ImageIcon("Kingdom/attack_175.png");
 
-    public FireBall(int x, int y, double xSpeed, double ySpeed, int powerLevel, boolean enemy) {
+    public FireBall(int x, int y, double xSpeed, double ySpeed) {
         super(x, y);
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
-        //later implement this variable so that a fireball is more powerful?? idk or we can get rid of this
-        this.powerLevel = powerLevel;
-        this.enemy = enemy;
     }
 
     public Image getFireBallImage() {

@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 public class Score {
 
-    int score = 0;
+    int score;
 
     public Score(int score) {
         this.score = score;

@@ -9,8 +9,8 @@ import javax.swing.ImageIcon;
 //increase enemy health (allow collisions twice, have variable and increment it)
 public class EnemyLvl2 extends Enemy {
 
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/red dragon_01.png");
-    private ImageIcon iconHor = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/red dragon_04.png");
+    private ImageIcon icon = new ImageIcon("Kingdom/pirate_03.png");
+    private ImageIcon iconHor = new ImageIcon("Kingdom/pirate_12.png");
     private int num = 1;
     private boolean change = false;
     private int movement;
@@ -37,9 +37,9 @@ public class EnemyLvl2 extends Enemy {
 
     public void setImage() {
         if (movement < 3) {
-            icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
+            icon = new ImageIcon("Kingdom/player fire_0" + num + ".png");
         } else {
-            iconHor = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
+            iconHor = new ImageIcon("Kingdom/player fire_0" + num + ".png");
         }
     }
 

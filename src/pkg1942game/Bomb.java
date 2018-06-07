@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 public class Bomb extends GameObject {
 
     private double ySpeed;
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_23.png");
+    private ImageIcon icon = new ImageIcon("Kingdom/attack_155.png");
 
     public Bomb(int x, int y, double ySpeed) {
         super(x, y);

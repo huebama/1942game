@@ -8,20 +8,14 @@ import javax.swing.ImageIcon;
 
 public class EnemyLvl1 extends Enemy {
 
-    private ImageIcon icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/black dragon_01.png");
-    private ImageIcon iconBack = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/black dragon_12.png");
-    private boolean forward = true;
+    private ImageIcon icon = new ImageIcon("Kingdom/enemy_1.png");
     private int num = 1;
     private int movement;
-    private int orgX;
-    private int orgY;
     private int lives = 1;
 
     public EnemyLvl1(int x, int y, int movement) {
         super(x, y, 5, 5);
         this.movement = movement;
-        orgX = x;
-        orgY = y;
     }
 
     public int getLives() {
@@ -33,15 +27,11 @@ public class EnemyLvl1 extends Enemy {
     }
 
     public Image getEnemyImage() {
-        return forward ? icon.getImage() : iconBack.getImage();
+        return icon.getImage();
     }
 
-    public void setImage() {
-        if (forward) {
-            icon = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
-        } else {
-            iconBack = new ImageIcon("/Users/stephaniegu/Desktop/Sprites/player fire_0" + num + ".png");
-        }
+    public void setImage() {        
+        icon = new ImageIcon("Kingdom/player fire_0" + num + ".png");
     }
 
     public Rectangle2D getRectangle() {
@@ -81,17 +71,16 @@ public class EnemyLvl1 extends Enemy {
                 y += ySpeed - 2;
                 break;
         }
-        //can reduce this
+
+        //later maybe add time into this?
         if (movement <= 3) {
             if (x > panel.getWidth() || y > panel.getHeight()) {
-                //change these to the same values, time difference already set, maybe start them all at -200, -200?
-                x = orgX;
-                y = orgY;
+                x = y = -500;
             }
         } else {
             if (x < 0 - icon.getIconWidth() || y > panel.getHeight()) {
-                x = orgX;
-                y = orgY;
+                x = panel.getWidth() + 500;
+                y = -500;
             }
         }
 

@@ -37,10 +37,13 @@ public class PlusLife extends PowerUp {
         g2d.drawImage(getPowerUpImage(), getXPos(), getYPos(), null);
     }
 
+    //when player collides with this powerup, gain one life, maximum of 6 lives
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         if (checkCollision(player)) {
             setImage();
-            player.gainLives(1);
+            if (player.getLives() < 6) {
+                player.gainLives(1);
+            }
             delete.add(this);
             Sound.LIFE_PWRUP.playSoundEffect();
         }

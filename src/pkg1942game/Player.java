@@ -1,5 +1,6 @@
 package pkg1942game;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
@@ -50,31 +51,37 @@ public class Player extends GameObject {
         level = 1;
     }
 
+    //returns player lives
     public int getLives() {
         return numLives;
     }
 
+    //adds lives 
     public void gainLives(int lives) {
         numLives += lives;
     }
 
+    //increases the level of player fire
     public void setFireballLevel() {
         fireballLevel++;
     }
 
+    //returns the level of player fire
     public int getFireballLevel() {
         return fireballLevel;
     }
-
+ 
+    //returns number of bombs player has
     public int getBombs() {
         return numBombs;
     }
 
+    //decrements amount of bombs
     public void loseBomb() {
         numBombs--;
     }
 
-    //this method should be used with powerups, bombs can be picked up
+    //player gains bombs 
     public void gainBomb(int numBombs) {
         this.numBombs += numBombs;
     }
@@ -86,6 +93,7 @@ public class Player extends GameObject {
         } catch (IOException e) {
         } catch (FontFormatException e) {
         }
+        //player image flashes so player knows they have lost a life
         if (playerHit) {
             now = System.currentTimeMillis();
             if (duration >= 15) {
@@ -97,6 +105,8 @@ public class Player extends GameObject {
             now = 300;
         }
 
+        g2d.setColor(Color.WHITE);
+        //drawing the labels at the top of the screen
         g2d.setFont(font);
         g2d.drawImage(heart.getImage(), 10, 12, null);
         g2d.drawString(Integer.toString(numLives), 30, 25);
@@ -115,6 +125,7 @@ public class Player extends GameObject {
             }
         }
 
+        //level up icon appears for 2 seconds so player knows they have levelled up
         if (lastLevel < level) {
             g2d.drawImage(levelUp.getImage(), x - levelUp.getIconWidth() / 4, y - levelUp.getIconHeight(), null);
             levelNow = System.currentTimeMillis();
@@ -129,14 +140,17 @@ public class Player extends GameObject {
     public void setImage() {
     }
 
+    //returns player icon
     public ImageIcon getPlayerIcon() {
         return icon;
     }
 
+    //returns image of player icon
     public Image getPlayerImage() {
         return icon.getImage();
     }
 
+    //sets speed of player 
     public void setXSpeed(double xSpeed) {
         this.xSpeed = xSpeed;
     }
@@ -145,26 +159,32 @@ public class Player extends GameObject {
         this.ySpeed = ySpeed;
     }
 
+    //sets player level
     public void setLevel(int level) {
         this.level = level;
     }
 
+    //returns player level
     public int getLevel() {
         return this.level;
     }
 
+    //creates rectangle object for detecting collision
     public Rectangle2D getRectangle() {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
+    //when player kills entire wave, variable set to true
     public void setWaveKilled() {
         waveKilled = true;
     }
 
+    //checks if the player killed the entire wave
     public boolean getWaveKilled() {
         return waveKilled;
     }
 
+    //increases when player kills enemy
     public void incNumKilled() {
         numKilled++;
     }
@@ -172,10 +192,10 @@ public class Player extends GameObject {
     //3 second delay, a player can be hit and lose a life and be immune for 3 seconds
     public void decrementLives(long now) {
         if (now - lastCollision >= 3000) {
-	    Sound.HIT.playSoundEffect();
             numLives--;
             lastCollision = now;
             playerHit = true;
+            Sound.HIT.playSoundEffect();
         }
     }
 
@@ -192,6 +212,7 @@ public class Player extends GameObject {
         int yVert = 0;
         int movement = 0;
 
+        //when player level greater than 6, different waves are randomized
         movement = level >= 6 ? rand.nextInt(5) + 1 : level;
         //boss at the end of each level
         movement = boss == true ? 6 : movement;
@@ -275,7 +296,7 @@ public class Player extends GameObject {
                 for (int i = 0; i < killCap; i++) {
                     type = rand.nextInt(3) + 1;
                     xPos = 0;
-                    //level 1
+                    //randomizes enemies from each level in one wave
                     if (type == 1) {
                         value = rand.nextInt(3) + 1;
                         xPos -= 200;
@@ -315,7 +336,7 @@ public class Player extends GameObject {
                 break;
         }
     }
-    //
+    
 
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         x += xSpeed;
@@ -352,12 +373,12 @@ public class Player extends GameObject {
         }
 
         //checks if player collides with fireball or enemy object and decrements life
-        //later make it flash so the player knows they lost a life
         for (GameObject object : objects) {
             if (checkCollision(object) && (object instanceof Enemy || object instanceof EnemyFireBall)) {
                 decrementLives(System.currentTimeMillis());
             }
         }
+        //ends game and sends to game over screen
         if (numLives <= 0) {
             panel.state = State.GAME_OVER;
         }

@@ -1,3 +1,4 @@
+
 package pkg1942game;
 
 import java.awt.Graphics2D;
@@ -8,14 +9,11 @@ import javax.swing.ImageIcon;
 
 public class FireBall extends GameObject {
 
-    private double xSpeed;
     private double ySpeed;
-    private int powerLevel;
     private ImageIcon icon = new ImageIcon("Kingdom/attack_175.png");
 
-    public FireBall(int x, int y, double xSpeed, double ySpeed) {
+    public FireBall(int x, int y, double ySpeed) {
         super(x, y);
-        this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }
 
@@ -31,14 +29,15 @@ public class FireBall extends GameObject {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
+    //override
     public void setXSpeed(double xSpeed) {
-        this.xSpeed = xSpeed;
     }
 
     public void setYSpeed(double ySpeed) {
         this.ySpeed = ySpeed;
     }
 
+    //paints image to screen
     public void paint(Graphics2D g2d) {
         g2d.drawImage(getFireBallImage(), getXPos(), getYPos(), null);
     }

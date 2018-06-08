@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 
+//designs the menu where player chooses mouse or keyboard for gameplay
 public class ChooseMenu {
 
     private Rectangle mouse = new Rectangle(75, 250, 200, 200);

@@ -37,6 +37,7 @@ public class PlusBombs extends PowerUp {
         g2d.drawImage(getPowerUpImage(), getXPos(), getYPos(), null);
     }
 
+    //if player collides with powerup, gain 3 bombs
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         if (checkCollision(player)) {
             setImage();

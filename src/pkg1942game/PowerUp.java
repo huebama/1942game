@@ -5,8 +5,6 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-//can get rid of this class later if not used
-
 public abstract class PowerUp extends GameObject {
 
     public PowerUp(int x, int y) {

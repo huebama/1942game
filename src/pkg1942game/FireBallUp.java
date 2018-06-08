@@ -37,6 +37,7 @@ public class FireBallUp extends PowerUp {
         g2d.drawImage(getPowerUpImage(), getXPos(), getYPos(), null);
     }
 
+    //when player collides with this powerup, level up weapon 
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         if (checkCollision(player)) {
             setImage();

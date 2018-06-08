@@ -11,8 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 
-//need to fix State.GAME to reset 
-
+//designs gameover menu
 public class GameOverMenu {
 
     private ImageIcon icon = new ImageIcon("Kingdom/game over_02.png");

@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class EnemyLvl3 extends Enemy {
 
-    private ImageIcon icon = new ImageIcon("Kingdom/big_13.png");    
+    private ImageIcon icon = new ImageIcon("Kingdom/big_13.png");
     private int num = 1;
     private boolean change = false;
     private int movement;
@@ -45,12 +45,13 @@ public class EnemyLvl3 extends Enemy {
     public void paint(Graphics2D g2d) {
         g2d.drawImage(getEnemyImage(), getXPos(), getYPos(), null);
     }
-    
+
+    //enemy firing every 3 seconds
     public void shoot(ArrayList<GameObject> objects, Long now) {
         if (now - lastShot >= 3000) {
             objects.add(new EnemyFireBall(x + icon.getIconWidth() / 2, y + icon.getIconHeight() / 2, 0, 6));
-	    Sound.ENEMY_SHOOT.playSoundEffect();
             lastShot = now;
+            Sound.ENEMY_SHOOT.playSoundEffect();
         }
     }
 
@@ -68,11 +69,12 @@ public class EnemyLvl3 extends Enemy {
         } else {
             x += getXSpeed();
         }
-        
+
+        //resets wave
         if (y > panel.getHeight() + icon.getIconHeight()) {
-            y = -100;
-        }               
-        
+            y = -200;
+        }
+
         shoot(objects, System.currentTimeMillis());
         checkHit(objects, delete, score, this, player);
     }

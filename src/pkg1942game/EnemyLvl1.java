@@ -22,6 +22,7 @@ public class EnemyLvl1 extends Enemy {
         return lives;
     }
 
+    //decreases enemy lives
     public void setLives() {
         lives--;
     }
@@ -30,10 +31,12 @@ public class EnemyLvl1 extends Enemy {
         return icon.getImage();
     }
 
+    //animates the enemy vanishing
     public void setImage() {        
         icon = new ImageIcon("Kingdom/player fire_0" + num + ".png");
     }
-
+ 
+    //creates rectangle for the icon so collisions can be detected
     public Rectangle2D getRectangle() {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
@@ -43,9 +46,9 @@ public class EnemyLvl1 extends Enemy {
     }
 
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
-        //add switch statement with different enemy path options with variable movement
-        //need to add spawning, randomized spawning from top or side of page (spawning based on which enemy path as well)
+        //based on the randomized movement variable, enemy moves in different paths
         switch (movement) {
+            //all cases move diagonally at different speeds or from different directions
             case 1:
                 x += xSpeed;
                 y += ySpeed;
@@ -72,7 +75,6 @@ public class EnemyLvl1 extends Enemy {
                 break;
         }
 
-        //later maybe add time into this?
         if (movement <= 3) {
             if (x > panel.getWidth() || y > panel.getHeight()) {
                 x = y = -500;

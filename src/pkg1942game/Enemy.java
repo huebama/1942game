@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.ImageIcon;
 
 public abstract class Enemy extends GameObject {
 
@@ -40,22 +39,20 @@ public abstract class Enemy extends GameObject {
 
     //checks to see if fireball hits enemy
     public void checkHit(ArrayList<GameObject> objects, ArrayList<GameObject> delete, Score score, Enemy enemy, Player player) {
-        //checks if fireball hits enemy or player object 
-        //need to add these objects to the delete array list
         for (GameObject check : objects) {
             if (checkCollision(check) && (check instanceof FireBall || check instanceof Bomb)) {
-		Sound.ENEMY_DIE.playSoundEffect();
                 check.setImage();
                 check.setXSpeed(0);
                 check.setYSpeed(0);
                 delete.add(check);
+                Sound.ENEMY_DIE.playSoundEffect();
                 //bomb deals 5 damage
                 if (check instanceof Bomb) {
                     for (int i = 0; i < 4; i++) {
                         enemy.setLives();
                     }
                 }
-                // chance enemy will drop powerup when u shoot it
+                //chance enemy will drop powerup when u shoot it
                 powerUp = rand.nextInt(20) + 1;
                 if (powerUp == 1) {
                     //level cap at 5
@@ -76,12 +73,14 @@ public abstract class Enemy extends GameObject {
                     }
                 }
                 enemy.setLives();
+                //100 points for every bullet landed on the enemy
                 score.setScore(100);
             }
         }
 
         hit = enemy.getLives() <= 0 ? true : false;
 
+        //animates enemy vanishing
         if (hit) {
             enemy.setImage();
             num = num < 10 ? num + 1 : 100;

@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 
+//designs help page
 public class HelpMenu {
 
     private ImageIcon keybladeUp = new ImageIcon("Kingdom/keyblade_01.png");

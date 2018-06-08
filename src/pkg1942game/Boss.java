@@ -48,8 +48,8 @@ public class Boss extends Enemy {
             objects.add(new EnemyFireBall(x + icon.getIconWidth() / 2 - 50, y + icon.getIconHeight(), 0, 6));
             objects.add(new EnemyFireBall(x + icon.getIconWidth() / 2 - 50, y + icon.getIconHeight(), 6, 6));
             objects.add(new EnemyFireBall(x + icon.getIconWidth() / 2 - 50, y + icon.getIconHeight(), -6, 6));
-	    Sound.ENEMY_SHOOT.playSoundEffect();
             lastShot = now;
+            Sound.ENEMY_SHOOT.playSoundEffect();
         }
     }
 

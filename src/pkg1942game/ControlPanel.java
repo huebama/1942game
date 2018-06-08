@@ -35,8 +35,6 @@ public class ControlPanel extends JPanel implements Runnable {
     private boolean clickedL = false;
     private boolean clickedU = false;
     private boolean clickedD = false;
-    private int x;
-    private int y;
     private int positioning = 0;
     private Background background = new Background(0, 0);
     private JLabel scoreLabel = new JLabel("");
@@ -51,8 +49,9 @@ public class ControlPanel extends JPanel implements Runnable {
         init();
 
         scoreLabel.setFont(font);
+        scoreLabel.setForeground(Color.WHITE);
         this.add(scoreLabel);
-        
+
         this.setBackground(Color.WHITE);
 
         frame.addKeyListener(new KeyControl(this));
@@ -77,33 +76,32 @@ public class ControlPanel extends JPanel implements Runnable {
         objects.clear();
     }
 
-    //paints image 
+    //paints different screens depending on state enum
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         if (state == State.MENU) {
-	    Sound.MENU.playMusic();
+            Sound.MENU.playMusic();
             menu.paint(g2d, this);
         } else if (state == State.CHOOSE) {
             chooseMenu.paint(g2d);
         } else if (state == State.GAME_OVER) {
-	    Sound.BACKGROUND.stopMusic();
-	    Sound.GAME_OVER.playMusic();
+            Sound.BACKGROUND.stopMusic();
+            Sound.GAME_OVER.playMusic();
             scoreLabel.setText("");
             gameOverMenu.paint(g2d, score, this);
         } else if (state == State.HELP) {
             helpMenu.paint(g2d);
         } else if (state == State.GAME) {
-	    Sound.MENU.stopMusic();
-	    Sound.BACKGROUND.playMusic();
             background.paint(g2d);
             this.add(scoreLabel);
             player.paint(g2d);
-            score.paint(g2d);
-            scoreLabel.setText(Integer.toString(score.getScore()));
+            scoreLabel.setText("SCORE: " + score.getScore());
             for (GameObject object : objects) {
                 object.paint(g2d);
             }
+            Sound.MENU.stopMusic();
+            Sound.BACKGROUND.playMusic();
         }
     }
 
@@ -163,7 +161,6 @@ public class ControlPanel extends JPanel implements Runnable {
                         player.setXSpeed(-5);
                         clickedL = true;
                         break;
-                    //adjust this based on the player level (higher levels shoot more fireballs, positioning is different)
                     case KeyEvent.VK_SPACE:
                         shootFireball();
                         break;
@@ -182,36 +179,37 @@ public class ControlPanel extends JPanel implements Runnable {
         if (player.getBombs() > 0) {
             positioning = player.getPlayerIcon().getIconWidth() / 2;
             objects.add(new Bomb(player.getXPos() + positioning, player.getYPos() - 20, 10));
-	    Sound.BOMB.playSoundEffect();
             player.loseBomb();
+            Sound.BOMB.playSoundEffect();
         }
     }
 
+    //shoots fireballs based on the player fireball level - 5 being max level
     public void shootFireball() {
         positioning = player.getPlayerIcon().getIconWidth() / 2;
 
         if (player.getFireballLevel() == 1) {
             //take out the number 20 and replace with variable that can be changed
-            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 0, 10));
+            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 10));
             //THIS BLOCK OF CODE SHOULD ACTUALLY BE FOR POWERUPS --> if a certain powerup is added, player gunfire is increased
         } else if (player.getFireballLevel() == 2) {
-            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + 25 + positioning, player.getYPos() - 20, 0, 10));
+            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + 25 + positioning, player.getYPos() - 20, 10));
         } else if (player.getFireballLevel() == 3) {
-            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 0, 10));
+            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 10));
         } else if (player.getFireballLevel() == 4) {
-            objects.add(new FireBall(player.getXPos() + positioning + 5, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning - 5, player.getYPos() - 20, 0, 10));
+            objects.add(new FireBall(player.getXPos() + positioning + 5, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning - 5, player.getYPos() - 20, 10));
         } else {
-            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning + 30, player.getYPos() - 20, 0, 10));
-            objects.add(new FireBall(player.getXPos() + positioning - 30, player.getYPos() - 20, 0, 10));
+            objects.add(new FireBall(player.getXPos() + positioning, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning + 15, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning - 15, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning + 30, player.getYPos() - 20, 10));
+            objects.add(new FireBall(player.getXPos() + positioning - 30, player.getYPos() - 20, 10));
         }
         Sound.SHOOT.playSoundEffect();
     }
@@ -236,6 +234,7 @@ public class ControlPanel extends JPanel implements Runnable {
         }
     }
 
+    //controls mouse shooting 
     public void mousePressed(MouseEvent e) {
         if (mouse) {
             if (e.getButton() == MouseEvent.BUTTON1) {
@@ -246,6 +245,8 @@ public class ControlPanel extends JPanel implements Runnable {
         }
     }
 
+    //allows player to play game using the mouse
+    //changes the cursor to hand cursor when hovering over a button 
     public void mouseMoved(MouseEvent e) {
         if (state == State.GAME && mouse) {
             player.setXPos(e.getX());

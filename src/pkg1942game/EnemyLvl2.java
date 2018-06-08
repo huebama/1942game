@@ -6,7 +6,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-//increase enemy health (allow collisions twice, have variable and increment it)
 public class EnemyLvl2 extends Enemy {
 
     private ImageIcon icon = new ImageIcon("Kingdom/pirate_03.png");
@@ -35,6 +34,7 @@ public class EnemyLvl2 extends Enemy {
         return movement < 3 ? icon.getImage() : iconHor.getImage();
     }
 
+    //animates enemy vanishing when killed
     public void setImage() {
         if (movement < 3) {
             icon = new ImageIcon("Kingdom/player fire_0" + num + ".png");
@@ -47,6 +47,7 @@ public class EnemyLvl2 extends Enemy {
         return new Rectangle2D.Double(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
+    //paints enemy onto screen
     public void paint(Graphics2D g2d) {
         g2d.drawImage(getEnemyImage(), getXPos(), getYPos(), null);
     }
@@ -54,6 +55,7 @@ public class EnemyLvl2 extends Enemy {
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         switch (movement) {
             case 1:
+                //straight down 
                 y += getYSpeed();
                 break;
             case 2:
@@ -76,8 +78,9 @@ public class EnemyLvl2 extends Enemy {
                 break;
         }
 
+        //resets the wave
         if (y > panel.getHeight()) {
-            y = -100;
+            y = -200;
         }
 
         if (x < 0 - icon.getIconWidth() && movement == 3) {

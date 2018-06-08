@@ -22,6 +22,7 @@ public class EnemyFireBall extends GameObject {
         return iconEnemy.getImage();
     }
 
+    //when colliding with another object, fireball disappears
     public void setImage() {
         iconEnemy = new ImageIcon("");
     }
@@ -42,7 +43,7 @@ public class EnemyFireBall extends GameObject {
         g2d.drawImage(getFireBallImage(), getXPos(), getYPos(), null);
     }
 
-    //add varying movement for if boolean enemy = true
+    //fireball may move diagonally or vertically
     public void update(ControlPanel panel, ArrayList<GameObject> objects, Score score, ArrayList<GameObject> delete, Player player) {
         x += xSpeed;
         y += ySpeed;

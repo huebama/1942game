@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 
+//designs menu screen
 public class Menu {        
 
     private ImageIcon icon = new ImageIcon("Kingdom/sora.png");
@@ -17,7 +18,6 @@ public class Menu {
     private Font font;
 
     public void paint(Graphics2D g2d, ControlPanel panel) {
-        //maybe make a title on a different app and save as an image and g2d.drawImage(...)?? 
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("Kingdom/Vecna Bold.otf"))).deriveFont(Font.PLAIN, 30);
             g2d.setFont(font);

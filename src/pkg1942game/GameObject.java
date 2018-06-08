@@ -30,6 +30,7 @@ public abstract class GameObject {
         this.y = y;
     }
 
+    //checks for collisions between two game objects
     public boolean checkCollision(GameObject object) {
         return getRectangle().intersects(object.getRectangle().getBounds());
     }

@@ -16,7 +16,9 @@ public enum Sound {
     HIT("Music/hit.wav"),
     LIFE_PWRUP("Music/pwrlife.wav"),
     MENU("Music/menu.wav"),
-    SHOOT("Music/shoot.wav");
+    SHOOT("Music/shoot.wav"),
+    SELECT("Music/select.wav"),
+    CURSOR_MOVE("Music/move.wav");
 
     private Clip clip;
 

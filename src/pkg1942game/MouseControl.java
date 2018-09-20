@@ -35,24 +35,30 @@ public class MouseControl implements MouseListener, MouseMotionListener {
                 //play button
                 if (mouseY >= 425 && mouseY <= 450) {
                     ControlPanel.state = State.CHOOSE;
+                    Sound.SELECT.playSoundEffect();
                 } else if (mouseY >= 500 && mouseY <= 525) {
                     //closes the screen when quit is pressed
-                    System.exit(1);
+                    System.exit(0);
+                    Sound.SELECT.playSoundEffect();
                 } else if (mouseY >= 575 && mouseY <= 600) {
                     ControlPanel.state = State.HELP;
+                    Sound.SELECT.playSoundEffect();
                 }
             }
         } else if (ControlPanel.state == State.CHOOSE) {
             if (mouseY >= 250 && mouseY <= 450) {
                 //mouse or keyboard               
                 if (mouseX >= 75 && mouseX <= 275) {
-                    ControlPanel.state = State.GAME;
+                    ControlPanel.state = State.GAME;                    
                     panel.mouse = true;
+                    Sound.SELECT.playSoundEffect();
                 } else if (mouseX >= 525 && mouseX <= 725) {
                     ControlPanel.state = State.GAME;
+                    Sound.SELECT.playSoundEffect();
                 }
             } else if (mouseX >= 10 && mouseX <= 60 && mouseY >= 10 && mouseY <= 60) {
                 ControlPanel.state = State.MENU;
+                Sound.SELECT.playSoundEffect();
             }
         } else if (ControlPanel.state == State.GAME_OVER) {
             if (mouseX >= 0 && mouseX <= 780) {
@@ -61,13 +67,16 @@ public class MouseControl implements MouseListener, MouseMotionListener {
                     Sound.GAME_OVER.stopMusic();
                     Sound.MENU.playMusic();
                     panel.init();
+                    Sound.SELECT.playSoundEffect();
                 } else if (mouseY >= 670 && mouseY <= 680) {
-                    System.exit(1);
+                    System.exit(0);
+                    Sound.SELECT.playSoundEffect();
                 }
             }
         } else if (ControlPanel.state == State.HELP) {
             if (mouseX >= 10 && mouseX <= 60 && mouseY >= 10 && mouseY <= 60) {
                 ControlPanel.state = State.MENU;
+                Sound.SELECT.playSoundEffect();
             }
         } else {
             panel.mousePressed(e);

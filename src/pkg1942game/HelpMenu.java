@@ -42,11 +42,11 @@ public class HelpMenu {
 
         g2d.drawString("P O W E R  U P S", 120, 50);
         g2d.drawImage(keybladeUp.getImage(), 50, 70, null);
-        g2d.drawString("powers up the keyblade (shooting)", 80, 90);
+        g2d.drawString("powers up keyblade (max five levels)", 80, 90);
         g2d.drawImage(plusBombs.getImage(), 50, 120, null);
         g2d.drawString("adds three bombs to inventory", 80, 140);
         g2d.drawImage(plusLife.getImage(), 50, 170, null);
-        g2d.drawString("adds one life", 80, 190);
+        g2d.drawString("adds one life (max six)", 80, 190);
 
         g2d.drawString("E N E M I E S", 140, 250);
         g2d.drawImage(enemy1.getImage(), 50, 270, null);

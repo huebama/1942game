@@ -256,24 +256,28 @@ public class ControlPanel extends JPanel implements Runnable {
         if (state == State.MENU) {
             if ((e.getX() >= 25 && e.getX() <= 800) && ((e.getY() >= 425 && e.getY() <= 475) || (e.getY() >= 500 && e.getY() <= 550) || (e.getY() >= 575 && e.getY() <= 625))) {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                Sound.CURSOR_MOVE.playSoundEffect();
             } else {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         } else if (state == State.CHOOSE) {
             if (((e.getY() >= 270 && e.getY() <= 470) && ((e.getX() >= 75 && e.getX() <= 275) || (e.getX() >= 525 && e.getX() <= 725))) || (e.getX() >= 10 && e.getX() <= 60 && e.getY() >= 10 && e.getY() <= 60)) {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                Sound.CURSOR_MOVE.playSoundEffect();
             } else {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         } else if (state == State.HELP) {
             if (e.getX() >= 10 && e.getX() <= 60 && e.getY() >= 10 && e.getY() <= 60) {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                Sound.CURSOR_MOVE.playSoundEffect();
             } else {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         } else if (state == State.GAME_OVER) {
             if ((e.getX() >= 0 && e.getX() <= 780) && ((e.getY() >= 610 && e.getY() <= 640) || e.getY() >= 670 && e.getY() <= 700)) {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                Sound.CURSOR_MOVE.playSoundEffect();
             } else {
                 frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
